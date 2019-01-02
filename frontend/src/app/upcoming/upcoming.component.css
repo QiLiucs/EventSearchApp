@@ -1,0 +1,10 @@
+select{
+  font-size: 14px;
+  padding: 0;
+  height: 32px;
+}
+button{
+  font-size: 14px;
+  text-align: center;
+  height: 32px;
+}

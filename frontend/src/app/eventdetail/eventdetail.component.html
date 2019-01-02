@@ -1,0 +1,75 @@
+<div [@eventdetailstate]>
+<h5 [ngStyle]="{textAlign:'center'}">{{eventDetail.event_name}}</h5>
+<button (click)="goToList()" class="btn btn-outline-secondary" role="button" [ngStyle]="{float:'left',fontSize:'14px'}" id="listbtn">< List</button>
+
+<div class="btn favbtn" [ngStyle]="{border:'1px solid #ccc',width:'32px',height:'32px',textAlign:'center',padding:'0',float:'right'}">
+  <i class="material-icons" [ngStyle]="{width:'24px',margin:'4px auto',padding:'0',color:'orange'}" (click)="defavorite()" *ngIf="favlist.has(eventId)">
+    star_rate
+  </i>
+  <i class="material-icons" [ngStyle]="{width:'24px',margin:'4px auto'}" (click)="favorite()" *ngIf="!favlist.has(eventId)">
+    star_borders
+  </i>
+</div>
+  <a target="_blank" href="https://twitter.com/share?url={{buyticket}}&text=Check out {{eventName}} located at {{venue}}. Website:&hashtags=CSCI571EventSearch"><img src="/assets/imgs/Twitter.png" [ngStyle]="{float:'right',width:'32px',height:'32px',marginRight:'10px'}" ></a>
+<ul class="nav nav-tabs justify-content-end" [ngStyle]="{marginBottom:'10px',fontSize:'14px',width:'100%'}">
+  <li class="nav-item">
+    <a class="nav-link active" routerLink="/eventdetail">Event</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/artistteam">Artist/Teams</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/venue">Venue</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/upcoming">Upcoming Events</a>
+  </li>
+</ul>
+<div class="progress" *ngIf="loading" [ngStyle]="{width:'800px'}">
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+</div>
+<div *ngIf="!loading">
+  <table class="table table-striped">
+
+    <tbody>
+    <tr *ngIf="eventDetail.artist_name!=''">
+      <th scope="row">Artist/Team(s)</th>
+      <td >{{eventDetail.artist_name}}</td>
+    </tr>
+    <tr *ngIf="eventDetail.venue!=''">
+      <th scope="row">Venue</th>
+      <td>{{eventDetail.venue}}</td>
+    </tr>
+    <tr *ngIf="eventDetail.data_time!=''">
+      <th scope="row">Time</th>
+      <td>{{eventDetail.data_time}}</td>
+    </tr>
+    <tr *ngIf="eventDetail.genre!=''">
+      <th scope="row">Category</th>
+      <td>{{eventDetail.genre}}</td>
+    </tr>
+    <tr *ngIf="eventDetail.price_range!=''&&eventDetail.price_range!=null">
+      <th scope="row">Price Range</th>
+      <td>{{eventDetail.price_range}}</td>
+    </tr>
+    <tr *ngIf="eventDetail.status!=''">
+      <th scope="row">Ticket Status</th>
+      <td>{{eventDetail.status}}</td>
+    </tr>
+    <tr *ngIf="eventDetail.buy_ticket!=''">
+      <th scope="row">Buy Ticket At</th>
+      <td><a target="_blank" href="{{eventDetail.buy_ticket}}">Ticketmaster</a></td>
+    </tr>
+    <tr *ngIf="eventDetail.seat_map!=''">
+      <th scope="row">Seat Map</th>
+      <td><button (click)="openSeatMap()" type="button" class="btn btn-outline-primary" [ngStyle]="{border:0,fontSize:'14px',padding:0}" id="seatbtn">View Seat Map Here</button></td>
+    </tr>
+    </tbody>
+  </table>
+
+
+</div>
+</div>
+<div class="backdrop" *ngIf="showBackdrop">
+
+</div>

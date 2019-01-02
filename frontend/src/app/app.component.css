@@ -1,0 +1,22 @@
+form{
+  width: 600px;
+  margin: 0 auto;
+  font-size: 14px;
+}
+#Formdiv{
+  background-color: rgb(247,247,247);
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 800px;
+
+}
+input,select{
+  height: 30px;
+  font-size: 14px;
+}
+input[type="radio"]{
+  height: 20px;
+}
+a[role="button"],button{
+  font-size: 14px;
+}

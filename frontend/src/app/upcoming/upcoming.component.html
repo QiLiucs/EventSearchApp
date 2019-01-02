@@ -1,0 +1,95 @@
+<h5 [ngStyle]="{textAlign:'center'}">{{eventName}}</h5>
+<button (click)="goToList()" class="btn btn-outline-secondary" role="button" [ngStyle]="{float:'left',fontSize:'14px'}" id="listbtn">< List</button>
+
+
+<div class="btn favbtn" [ngStyle]="{border:'1px solid #ccc',width:'32px',height:'32px',textAlign:'center',padding:'0',float:'right'}">
+  <i class="material-icons" [ngStyle]="{width:'24px',margin:'4px auto',padding:'0',color:'orange'}" (click)="defavorite()" *ngIf="favlist.has(eventId)">
+    star_rate
+  </i>
+  <i class="material-icons" [ngStyle]="{width:'24px',margin:'4px auto'}" (click)="favorite()" *ngIf="!favlist.has(eventId)">
+    star_borders
+  </i>
+</div>
+<a target="_blank" href="https://twitter.com/share?url={{buyticket}}&text=Check out {{eventName}} located at {{venue}}. Website:&hashtags=CSCI571EventSearch"><img src="/assets/imgs/Twitter.png" [ngStyle]="{float:'right',width:'32px',height:'32px',marginRight:'10px'}" ></a>
+<ul class="nav nav-tabs justify-content-end" [ngStyle]="{marginBottom:'10px',fontSize:'14px',width:'100%'}">
+  <li class="nav-item">
+    <a class="nav-link" [routerLink]="['/eventdetail',eventId,category]">Event</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/artistteam">Artist/Teams</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/venue">Venue</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" routerLink="/upcoming">Upcoming Events</a>
+  </li>
+</ul>
+
+<div class="progress" *ngIf="loading" [ngStyle]="{width:'800px',marginTop:'100px'}">
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+</div>
+
+<div *ngIf="upcomings.length==0&&loading==false">
+
+  <div [ngStyle]="{width:'100%',height:'40px','backgroundColor':'rgb(255,244,196)','line-height':'40px','paddingLeft':'10px','border-radius':'4px','font-size':'14px',marginTop:'100px'}">No records</div>
+
+</div>
+
+<div *ngIf="upcomings.length>0&&loading==false">
+
+<div class="row">
+  <div class="col-md-3">
+    <select class="form-control" id="sorttype" (change)="onChangeSortType(typeSelect,orderSelect)" #typeSelect>
+      <option>Default</option>
+      <option>Event Name</option>
+      <option>Time</option>
+      <option>Artist</option>
+      <option>Type</option>
+    </select>
+  </div>
+
+  <div class="col-md-3">
+    <select class="form-control" id="order" #orderSelect [disabled]="disable" (change)="onChangeSortType(typeSelect,orderSelect)">
+      <option>Ascending</option>
+      <option>Descending</option>
+
+    </select>
+  </div>
+</div>
+<!--<div [@listAnimation]="upcomingsSlice.length"-->
+     <!--(@listAnimation.start)="logAnimation($event)"-->
+     <!--(@listAnimation.done)="logAnimation($event)">-->
+  <!--<div class="card" style="width: 100%;font-size: 14px" *ngFor="let up of upcomingsSlice">-->
+    <!--<div class="card-body">-->
+      <!--<h5 class="card-title"><a href="{{up.url}}" [ngStyle]="{fontSize:'14px'}">{{up.displayName}}</a></h5>-->
+      <!--<h6 class="card-subtitle mb-2 text-muted" [ngStyle]="{fontSize:'14px'}"><span style="color: orange">Artist:{{up.artist}}</span> {{up.date}} {{up.time}}</h6>-->
+      <!--<p class="card-text" [ngStyle]="{fontSize:'14px'}">Type:{{up.type}}</p>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<div class="card" style="width: 100%;font-size: 14px" *ngFor="let up of upcomingsSlice|slice:0:5">
+  <div class="card-body">
+    <h5 class="card-title"><a href="{{up.url}}" [ngStyle]="{fontSize:'14px'}" target="_blank" >{{up.displayName}}</a></h5>
+    <h6 class="card-subtitle mb-2 text-muted" [ngStyle]="{fontSize:'14px'}"><span style="color: orange">Artist:{{up.artist}}</span> {{up.date}} {{up.time}}</h6>
+    <p class="card-text" [ngStyle]="{fontSize:'14px'}">Type:{{up.type}}</p>
+  </div>
+</div>
+
+<div [@filterAnimation]="upcomingsSlice.length">
+  <div class="card" style="width: 100%;font-size: 14px" *ngFor="let up of upcomingsSlice | slice:6:upcomingsSlice.length">
+    <div class="card-body">
+      <h5 class="card-title"><a href="{{up.url}}" [ngStyle]="{fontSize:'14px'}" target="_blank" >{{up.displayName}}</a></h5>
+      <h6 class="card-subtitle mb-2 text-muted" [ngStyle]="{fontSize:'14px'}"><span style="color: orange">Artist:{{up.artist}}</span> {{up.date}} {{up.time}}</h6>
+      <p class="card-text" [ngStyle]="{fontSize:'14px'}">Type:{{up.type}}</p>
+    </div>
+  </div>
+
+</div>
+<div [ngStyle]="{textAlign:'center'}">
+  <button type="button" class="btn btn-primary" *ngIf="more" (click)="onShowMoreOrLess()">{{btnvalue}}</button>
+  <!--<button type="button" class="btn btn-primary" *ngIf="less" (click)="onShowLess()">Show Less</button>-->
+</div>
+</div>
+
+

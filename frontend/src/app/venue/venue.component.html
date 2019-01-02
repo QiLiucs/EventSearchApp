@@ -1,0 +1,89 @@
+<head>
+  <style>
+    /* Set the size of the div element that contains the map */
+    #map {
+      height: 400px;  /* The height is 400 pixels */
+      width: 100%;  /* The width is the width of the web page */
+    }
+  </style>
+  <link rel="canonical"
+        href="/web/tweet-button">
+</head>
+<body>
+<h5 [ngStyle]="{textAlign:'center'}">{{eventName}}</h5>
+<button (click)="goToList()" class="btn btn-outline-secondary" role="button" [ngStyle]="{float:'left',fontSize:'14px'}" id="listbtn">< List</button>
+
+<div class="btn favbtn" [ngStyle]="{border:'1px solid #ccc',width:'32px',height:'32px',textAlign:'center',padding:'0',float:'right'}">
+  <i class="material-icons" [ngStyle]="{width:'24px',margin:'4px auto',padding:'0',color:'orange'}" (click)="defavorite()" *ngIf="favlist.has(eventId)">
+    star_rate
+  </i>
+  <i class="material-icons" [ngStyle]="{width:'24px',margin:'4px auto'}" (click)="favorite()" *ngIf="!favlist.has(eventId)">
+    star_borders
+  </i>
+</div>
+<a target="_blank" href="https://twitter.com/share?url={{buyticket}}&text=Check out {{eventName}} located at {{venue}}. Website:&hashtags=CSCI571EventSearch"><img src="/assets/imgs/Twitter.png" [ngStyle]="{float:'right',width:'32px',height:'32px',marginRight:'10px'}" ></a>
+
+<ul class="nav nav-tabs justify-content-end" [ngStyle]="{marginBottom:'10px',fontSize:'14px',width:'100%'}">
+  <li class="nav-item">
+    <a class="nav-link" [routerLink]="['/eventdetail',eventId,category]">Event</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/artistteam">Artist/Teams</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" routerLink="/venue">Venue</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/upcoming">Upcoming Events</a>
+  </li>
+</ul>
+<h6 [ngStyle]="{textAlign:'center'}">{{venueInfo.venuename}}</h6>
+<table class="table table-striped" [ngStyle]="{fontSize:'14px'}">
+
+  <tbody>
+  <tr *ngIf="venueInfo.address!=''">
+    <th scope="row">Address</th>
+    <td>{{venueInfo.address}}</td>
+
+  </tr>
+  <tr *ngIf="venueInfo.city!=''">
+    <th scope="row">City</th>
+    <td>{{venueInfo.city}}</td>
+
+  </tr>
+  <tr *ngIf="venueInfo.phone!=''">
+    <th scope="row">Phone Number</th>
+    <td>{{venueInfo.phone}}</td>
+
+  </tr>
+  <tr *ngIf="venueInfo.openhours!=''">
+    <th scope="row">Open Hours</th>
+    <td>{{venueInfo.openhours}}</td>
+
+  </tr>
+  <tr *ngIf="venueInfo.genrule!=''">
+    <th scope="row">General Rules</th>
+    <td>{{venueInfo.genrule}}</td>
+
+  </tr>
+  <tr *ngIf="venueInfo.childrule!=''">
+    <th scope="row">Child Rules</th>
+    <td>{{venueInfo.childrule}}</td>
+  </tr>
+
+  </tbody>
+</table>
+<agm-map [latitude]="detaillat" [longitude]="detaillng" [zoom]="zoom">
+  <agm-marker [latitude]="detaillat" [longitude]="detaillng">
+    <!--<agm-info-window>-->
+      <!--<h6>{{venueInfo.venuename}}</h6>-->
+      <!--<p>{{venueInfo.address}}</p>-->
+      <!--<p>{{venueInfo.city}}</p>-->
+      <!--&lt;!&ndash;https://www.google.com/maps?ll=-33.850809,151.216582&z=13&t=m&hl=en-US&gl=US&mapclient=apiv3&cid=7535804993526350910&ndash;&gt;-->
+      <!--<a target="_blank" href="https://www.google.com/maps?ll={{detaillat}},{{detaillng}}&z=13&t=m&hl=en-US&gl=US&mapclient=apiv3&cid=7535804993526350910">View on Google Maps</a>-->
+
+    <!--</agm-info-window>-->
+  </agm-marker>
+</agm-map>
+<!--<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
+</body>

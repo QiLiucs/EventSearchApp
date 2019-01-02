@@ -1,0 +1,22 @@
+<head>
+  <style>
+    #clearicon:hover{
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<h1 mat-dialog-title>View Seat Map
+  <i class="material-icons" [ngStyle]="{float:'right'}" id="clearicon" (click)="onNoClick()">
+    clear
+  </i>
+</h1>
+
+<hr>
+<div mat-dialog-content [ngStyle]="{textAlign:'center'}">
+  <a [href]="data.seatmap" target="_blank" ><img [src]="data.seatmap" [ngStyle]="{width:'90%',height:'90%'}"></a>
+</div>
+<hr>
+<div mat-dialog-actions>
+  <button type="button" class="btn btn-outline-secondary" (click)="onNoClick()" [ngStyle]="{float:'right',marginLeft:'250px'}">Close</button>
+</div>

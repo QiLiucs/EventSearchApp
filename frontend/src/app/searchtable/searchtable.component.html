@@ -1,0 +1,61 @@
+
+<body>
+
+<!--<div [@searchstate]>-->
+<div>
+  <div class="progress" *ngIf="showLoad.show && showLoad.loading" [ngStyle]="{width:'800px',marginTop:'80px'}">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+  </div>
+  <div *ngIf="showLoad.show && !showLoad.loading">
+    <div *ngIf="searchres.length==0">
+      <app-blank></app-blank>
+    </div>
+    <div *ngIf="searchres.length>0">
+    <button [routerLink]="['/eventdetail/',eventId,genre]" class="btn btn-outline-secondary" role="button" [ngStyle]="{float:'right',fontSize:'14px'}" id="detailbtn" [disabled]="detailBtnDisable">Detail ></button>
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Date</th>
+        <th scope="col">Event</th>
+        <th scope="col">Category</th>
+        <th scope="col">Venue Info</th>
+        <th scope="col">Favorite</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let res of searchres; index as i;" class="contenttr" [ngStyle]="{backgroundColor:eventId==res.returnval.eventid?'rgb(253,223,139)':''}">
+        <th scope="row">{{i+1}}</th>
+        <td>{{res.returnval.localDate}}</td>
+        <td><a [routerLink]="['/eventdetail/',res.returnval.eventid,res.returnval.genre]" matTooltip={{res.returnval.eventname}}>{{res.returnval.processedename}}</a></td>
+        <td>{{res.returnval.genre}}</td>
+        <td>{{res.returnval.venuename}}</td>
+        <td>
+          <!--<p [ngStyle]="{border:'1px solid #ccc',width:'36px',textAlign:'center'}">-->
+            <!--<i class="material-icons" [ngStyle]="{width:'24px',margin:'4px auto'}" (click)="favorite()">-->
+              <!--star_borders-->
+            <!--</i>-->
+            <!--<i class="material-icons" [ngStyle]="{width:'24px',margin:'4px auto',padding:'0',color:'orange'}" (click)="defavorite()">-->
+              <!--star_rate-->
+            <!--</i>-->
+          <!--</p>-->
+          <div class="btn favbtn" [ngStyle]="{border:'1px solid #ccc',width:'32px',height:'32px',textAlign:'center',padding:'0',float:'right'}">
+            <i class="material-icons" [ngStyle]="{width:'24px',margin:'4px auto',padding:'0',color:'orange'}" (click)="defavorite(res.returnval.eventid)" *ngIf="favlist.has(res.returnval.eventid)">
+              star_rate
+            </i>
+            <i class="material-icons" [ngStyle]="{width:'24px',margin:'4px auto'}" (click)="favorite(res.returnval.eventid,res.returnval.localDate,res.returnval.eventname,res.returnval.processedename,res.returnval.genre,res.returnval.venuename)" *ngIf="!favlist.has(res.returnval.eventid)">
+              star_borders
+            </i>
+          </div>
+
+        </td>
+
+      </tr>
+
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+</body>

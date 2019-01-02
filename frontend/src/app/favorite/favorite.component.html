@@ -1,0 +1,60 @@
+<body>
+
+<div>
+
+  <div *ngIf="favlist.size==0" [ngStyle]="{width:'100%',height:'40px','backgroundColor':'rgb(255,244,196)','line-height':'40px','paddingLeft':'10px','border-radius':'4px','font-size':'14px'}">No records</div>
+
+  <div *ngIf="favlist.size>0">
+    <button [routerLink]="['/eventdetail/',eventId,genre]" class="btn btn-outline-secondary" role="button" [ngStyle]="{float:'right',fontSize:'14px'}" id="detailbtn" [disabled]="detailBtnDisable">Detail ></button>
+  <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Date</th>
+        <th scope="col">Event</th>
+        <th scope="col">Category</th>
+        <th scope="col">Venue Info</th>
+        <th scope="col">Favorite</th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+      <!--<tr *ngFor="let fav of favlist; index as i;" class="contenttr" [ngStyle]="{backgroundColor:eventId==fav[0]?'rgb(253,223,139)':''}">-->
+        <!--<th scope="row">{{i+1}}</th>-->
+        <!--<td>{{fav[1].localDate}}</td>-->
+        <!--<td><a [routerLink]="['/eventdetail/',fav[0],fav[1].genre]" matTooltip={{fav[1].eventname}}>{{fav[1].eventname}}</a></td>-->
+        <!--<td>{{fav[1].genre}}</td>-->
+        <!--<td>{{fav[1].venuename}}</td>-->
+        <!--<td>-->
+          <!--<p [ngStyle]="{border:'1px solid #ccc',width:'36px',textAlign:'center'}">-->
+            <!--<i class="material-icons" [ngStyle]="{width:'24px',margin:'4px auto'}">-->
+              <!--delete-->
+            <!--</i>-->
+          <!--</p>-->
+
+        <!--</td>-->
+
+      <!--</tr>-->
+      <tr *ngFor="let key of favlist.keys(); index as i;" class="contenttr" [ngStyle]="{backgroundColor:eventId==key?'rgb(253,223,139)':''}">
+        <th scope="row">{{i+1}}</th>
+        <td>{{favlist.get(key).localDate}}</td>
+        <td><a [routerLink]="['/eventdetail/',key,favlist.get(key).genre]" matTooltip={{favlist.get(key).eventname}}>{{favlist.get(key).processedename}}</a></td>
+        <td>{{favlist.get(key).genre}}</td>
+        <td>{{favlist.get(key).venuename}}</td>
+        <td>
+          <div class="btn" [ngStyle]="{border:'1px solid #ccc',width:'32px',height:'32px',textAlign:'center',padding:'0',float:'right'}">
+            <i class="material-icons" [ngStyle]="{width:'24px',margin:'4px auto'}" (click)="trash(key)">
+              delete
+            </i>
+          </div>
+
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+</div>
+</div>
+
+</body>

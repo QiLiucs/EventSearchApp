@@ -1,0 +1,12 @@
+table{
+  font-size: 14px;
+  /*margin-top: 150px;*/
+}
+table .contenttr:hover{
+  background-color: rgb(236,236,236);
+}
+#detailbtn{
+  color: black;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+}

@@ -1,0 +1,117 @@
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+</head>
+
+<div class="container" id="Formdiv">
+  <p [ngStyle]="{textAlign:'center'}">Entertainment Event Ticket Search</p>
+  <div>
+    <form method="post">
+      <div class="form-group row">
+        <label for="keyword" class="col-sm-2 col-form-label">Keyword<span [ngStyle]="{color:'red'}">*</span></label>
+        <div class="col-sm-10">
+          <!--<input type="text" class="form-control" id="keyword" appRespondToBlur (input)="onTextChange($event)">-->
+          <input type="text" class="form-control" id="keyword" (blur)="onBlur($event)" (keydown)="onKeydown($event)" [ngStyle]="{border:getBorderStyle()}"
+                 #keywordInput placeholder="Enter Artist, Team or Event Name(eg.Lakers)"
+                 matInput [matAutocomplete]="auto" [formControl]="stateCtrl">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let key of filteredKeywords | async" [value]="key.name">
+
+              <span>{{key.name}}</span>
+
+            </mat-option>
+          </mat-autocomplete>
+
+          <p [ngStyle]="{color:'red',fontSize:'12px'}">{{errorMsg}}</p>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="Category" class="col-sm-2 col-form-label">Category</label>
+        <div class="col-sm-3">
+          <select class="custom-select mr-sm-2" id="Category" #categorySelect>
+            <option id="Default" value="Default" [selected]="category=='Default'">All</option>
+            <option id="Music" value="Music" [selected]="category=='Music'">Music</option>
+            <option id="Sports" value="Sports" [selected]="category=='Sports'">Sports</option>
+            <option id="Arts & Theatre" value="Arts & Theatre" [selected]="category=='Arts & Theatre'">Arts & Theatre</option>
+            <option id="Film" value="Film" [selected]="category=='Film'">Film</option>
+            <option id="Miscellaneous" value="Miscellaneous" [selected]="category=='Miscellaneous'">Miscellaneous</option>
+          </select>
+        </div>
+        <div class="col-sm-5"></div>
+      </div>
+      <div class="row">
+        <label class="col-sm-2 col-form-label">Distance</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" id="Distance" placeholder="10" #distInput [value]="distance" >
+        </div>
+        <div class="col-sm-3">
+          <select class="custom-select mr-sm-3" id="Units" #unitsSelect>
+            <option id="Miles" value="miles" [selected]="units=='miles'">Miles</option>
+            <option id="kilos" value="km" [selected]="units=='km'">Kilometers</option>
+          </select>
+        </div>
+      </div>
+      <fieldset class="form-group">
+        <div class="row">
+          <label class="col-form-label col-sm-2 pt-0">From<span [ngStyle]="{color:'red'}">*</span></label>
+          <div class="col-sm-10">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="curloc" [checked]="radio=='curloc'"
+              #curlocRadio
+                     (change)="diableLocInput(locInput)">
+              <span class="form-check-label" for="gridRadios1">
+                Current location
+              </span>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="other"
+              #otherRadio [checked]="radio=='other'"
+                     (change)="enableLocInput()">
+              <span class="form-check-label" for="gridRadios2">
+                 Other,Please specify:
+              </span>
+            </div>
+            <input type="text" class="form-control" id="Loc" [disabled]="disableLocInput" [ngStyle]="{border:locBorderStyle}"
+            #locInput (blur)="onBlurLoc($event)" (keydown)="onLocKeydown($event)" [value]="location">
+            <p [ngStyle]="{color:'red',fontSize:'12px'}">{{locErrorMsg}}</p>
+          </div>
+        </div>
+      </fieldset>
+      <div class="form-group row">
+        <div class="col-sm-5">
+          <button type="button" class="btn btn-primary" [ngStyle]="{textAlign:'center',backgroundColor:'rgb(84,155,255)',border:'0'}"
+          (click)="sendSearchReq(keywordInput,
+                                 categorySelect,
+                                 distInput,
+                                 unitsSelect,
+                                 curlocRadio,
+                                 otherRadio,
+                                 locInput)"
+                  [disabled]="!valid"
+          ><i class="material-icons" [ngStyle]="{float:'left'}">search</i><span>Search</span></button>
+          &nbsp;&nbsp;
+          <button type="submit" class="btn" [ngStyle]="{border:'1px solid #ccc'}" (click)="clear(keywordInput,
+                                  categorySelect,
+                                  distInput,
+                                  unitsSelect,
+                                  curlocRadio,
+                                  otherRadio,
+                                  locInput)"><i class="material-icons" [ngStyle]="{float:'left'}" >
+            clear_all
+          </i><span>Clear</span></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="container" [ngStyle]="{width:'800px'}">
+  <div [ngStyle]="{textAlign:'center',marginTop:'20px',marginBottom:'40px'}">
+    <a [class]="resultBtnClass" routerLink="/search/false" role="button" (click)="changeClass('result')" >Results</a>
+    <a [class]="favoriteBtnClass" routerLink="/favorite" role="button" (click)="changeClass('fav')">Favorites</a>
+  </div>
+  <div [@routeAnimations]="prepareRoute(outlet)">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </div>
+</div>
+
+
